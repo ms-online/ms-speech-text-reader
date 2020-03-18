@@ -75,3 +75,32 @@ function createBox(item) {
 
   main.appendChild(box);
 }
+
+// 创建空数组存储语音
+let voices = [];
+function getVoices() {
+  voices = speechSynthesis.getVoices();
+
+  voices.forEach(voice => {
+    const option = document.createElement("option");
+    option.value = voice.name;
+    option.innerText = `${voice.name} ${voice.lang}`;
+
+    voicesSelect.appendChild(option);
+  });
+}
+
+// 切换语音事件监听
+speechSynthesis.addEventListener("voiceschanged", getVoices);
+
+// 切换文字框事件监听
+toggleBtn.addEventListener("click", () =>
+  document.getElementById("text-box").classList.toggle("show")
+);
+
+// 关闭按钮事件监听
+closeBtn.addEventListener("click", () =>
+  document.getElementById("text-box").classList.remove("show")
+);
+
+getVoices();

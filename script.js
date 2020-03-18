@@ -113,6 +113,11 @@ function speakText() {
   speechSynthesis.speak(message);
 }
 
+// 切换语音
+function setVoice(e) {
+  message.voice = voices.find(voice => voice.name === e.target.value);
+}
+
 // 切换语音事件监听
 speechSynthesis.addEventListener("voiceschanged", getVoices);
 
@@ -125,5 +130,14 @@ toggleBtn.addEventListener("click", () =>
 closeBtn.addEventListener("click", () =>
   document.getElementById("text-box").classList.remove("show")
 );
+
+// select下拉框的事件监听
+voicesSelect.addEventListener("change", setVoice);
+
+// 阅读文字按钮的事件监听
+readBtn.addEventListener("click", () => {
+  setTextMessage(textarea.value);
+  speakText();
+});
 
 getVoices();

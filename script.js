@@ -73,8 +73,21 @@ function createBox(item) {
     <p class="info">${text}</p>
   `;
 
+  // 点击按钮进行阅读的事件监听
+  box.addEventListener("click", () => {
+    setTextMessage(text);
+    speakText();
+
+    // 添加active效果
+    box.classList.add("active");
+    setTimeout(() => box.classList.remove("active"), 800);
+  });
+
   main.appendChild(box);
 }
+
+// 初始化speechsynth
+const message = new SpeechSynthesisUtterance();
 
 // 创建空数组存储语音
 let voices = [];
@@ -88,6 +101,16 @@ function getVoices() {
 
     voicesSelect.appendChild(option);
   });
+}
+
+// 获得文字
+function setTextMessage(text) {
+  message.text = text;
+}
+
+// 阅读文字
+function speakText() {
+  speechSynthesis.speak(message);
 }
 
 // 切换语音事件监听
